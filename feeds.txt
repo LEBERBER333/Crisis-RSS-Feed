@@ -1,0 +1,31 @@
+# Each line: Category | Source name | Feed URL
+# Add, remove or edit lines to change what goes into the combined feed.
+# Lines starting with # are ignored.
+
+# --- Daily Topic Searches ---
+Daily Topic Searches | Crisis communications | https://news.google.com/rss/search?q=%22crisis+communications%22+OR+%22crisis+management%22+OR+%22crisis+PR%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Daily Topic Searches | PR crises & backlash | https://news.google.com/rss/search?q=%22PR+crisis%22+OR+%22PR+disaster%22+OR+%22brand+backlash%22+OR+%22public+backlash%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Daily Topic Searches | Reputation management | https://news.google.com/rss/search?q=%22reputation+management%22+OR+%22corporate+reputation%22+OR+%22brand+reputation%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Daily Topic Searches | Boycotts & apologies | https://news.google.com/rss/search?q=boycott+brand+OR+%22issues+apology%22+OR+%22public+apology%22+company+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Daily Topic Searches | Marketing industry | https://news.google.com/rss/search?q=%22marketing+campaign%22+OR+CMO+OR+%22chief+marketing+officer%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Daily Topic Searches | Public relations industry | https://news.google.com/rss/search?q=%22public+relations%22+agency+OR+%22PR+firm%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- PR & Comms Trades ---
+PR & Comms Trades | PR Daily (Ragan) | https://www.prdaily.com/feed/
+PR & Comms Trades | PR News | https://www.prnewsonline.com/feed/
+PR & Comms Trades | Institute for Public Relations | https://instituteforpr.org/feed/
+PR & Comms Trades | Spin Sucks | https://spinsucks.com/feed/
+PR & Comms Trades | PRWeek | https://news.google.com/rss/search?q=site%3Aprweek.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+PR & Comms Trades | PRovoke Media | https://news.google.com/rss/search?q=site%3Aprovokemedia.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+PR & Comms Trades | O'Dwyer's | https://news.google.com/rss/search?q=site%3Aodwyerpr.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- Marketing & Advertising Trades ---
+Marketing & Advertising Trades | Adweek | https://www.adweek.com/feed/
+Marketing & Advertising Trades | Digiday | https://digiday.com/feed/
+Marketing & Advertising Trades | Marketing Dive | https://www.marketingdive.com/feeds/news/
+Marketing & Advertising Trades | MarTech | https://martech.org/feed/
+Marketing & Advertising Trades | Social Media Today | https://www.socialmediatoday.com/feeds/news/
+Marketing & Advertising Trades | Ad Age | https://news.google.com/rss/search?q=site%3Aadage.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | The Drum | https://news.google.com/rss/search?q=site%3Athedrum.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | Campaign | https://news.google.com/rss/search?q=site%3Acampaignlive.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | Marketing Week | https://news.google.com/rss/search?q=site%3Amarketingweek.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
