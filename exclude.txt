@@ -1,0 +1,69 @@
+# Headlines containing any of these words or phrases are dropped from that category.
+# Put the category name in [brackets], then one word or phrase per line underneath.
+# Matching ignores capitals and only matches whole words ("army" won't block "Armytage").
+# Add a new [Category] section to filter any other category the same way.
+
+[Crisis Watch]
+trump
+biden
+harris
+vance
+white house
+trump administration
+biden administration
+congress
+congressional
+senate
+senator
+lawmakers
+lawmaker
+legislature
+legislators
+governor
+mayor
+city council
+election
+elections
+ballot
+voters
+gop
+democrats
+republicans
+democratic party
+republican party
+pentagon
+military
+army
+government
+minister
+prime minister
+parliament
+kremlin
+putin
+ukraine
+russia
+gaza
+israel
+hamas
+iran
+police
+sheriff
+deportation
+immigration
+school board
+school district
+doge
+federal agency
+state department
+
+[Sales Signals]
+trump
+biden
+white house
+senate
+congress
+governor
+mayor
+pentagon
+military
+election
