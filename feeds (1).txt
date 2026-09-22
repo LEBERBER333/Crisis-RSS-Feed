@@ -1,0 +1,66 @@
+# Each line: Category | Source name | Feed URL
+# Add, remove or edit lines to change what goes into the combined feed.
+# Categories appear on the page in the order they're listed here.
+# Lines starting with # are ignored.
+
+# --- Trending Now ---
+Trending Now | Google Trends (US searches) | https://trends.google.com/trending/rss?geo=US
+Trending Now | Google News Business headlines | https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-US&gl=US&ceid=US:en
+Trending Now | Google News Tech headlines | https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-US&gl=US&ceid=US:en
+Trending Now | Techmeme | https://www.techmeme.com/feed.xml
+
+# --- Crisis Watch ---
+Crisis Watch | Backlash & boycotts | https://news.google.com/rss/search?q=intitle%3Abacklash+OR+intitle%3Aboycott+OR+intitle%3A%22under+fire%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Corporate apologies | https://news.google.com/rss/search?q=%28intitle%3Aapologizes+OR+intitle%3Aapology+OR+intitle%3A%22walks+back%22%29+%28company+OR+brand+OR+CEO%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Executive exits | https://news.google.com/rss/search?q=%28CEO+OR+executive%29+%28intitle%3Aresigns+OR+intitle%3Aousted+OR+intitle%3A%22steps+down%22+OR+intitle%3Afired%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Recalls | https://news.google.com/rss/search?q=intitle%3Arecall+%28product+OR+FDA+OR+NHTSA+OR+vehicles+OR+food%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Data breaches & cyberattacks | https://news.google.com/rss/search?q=intitle%3A%22data+breach%22+OR+intitle%3Aransomware+OR+intitle%3Acyberattack+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Lawsuits & investigations | https://news.google.com/rss/search?q=%28intitle%3Alawsuit+OR+intitle%3Asued+OR+intitle%3Aprobe+OR+intitle%3Ainvestigation%29+%28company+OR+brand+OR+corporation%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Crisis Watch | Viral brand moments | https://news.google.com/rss/search?q=intitle%3Aviral+%28brand+OR+company+OR+CEO+OR+customers%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- Narrative Risk ---
+Narrative Risk | Disinformation targeting companies | https://news.google.com/rss/search?q=%28disinformation+OR+misinformation%29+%28brand+OR+company+OR+corporate+OR+CEO%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Narrative Risk | Deepfakes & impersonation | https://news.google.com/rss/search?q=intitle%3Adeepfake+%28CEO+OR+company+OR+brand+OR+executive+OR+scam%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Narrative Risk | Bots & coordinated campaigns | https://news.google.com/rss/search?q=%22narrative+attack%22+OR+%22coordinated+inauthentic%22+OR+%22bot+network%22+OR+%22bot+campaign%22+OR+%22influence+operation%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Narrative Risk | Reputational risk | https://news.google.com/rss/search?q=%22reputational+risk%22+OR+%22reputational+damage%22+OR+%22corporate+reputation%22+OR+%22crisis+communications%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- Competitors ---
+Competitors | GUDEA mentions | https://news.google.com/rss/search?q=GUDEA+OR+%22gudea.ai%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Blackbird.AI | https://news.google.com/rss/search?q=%22Blackbird.AI%22+OR+%22Blackbird+AI%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Cyabra | https://news.google.com/rss/search?q=Cyabra+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Alethea | https://news.google.com/rss/search?q=Alethea+%28disinformation+OR+narrative+OR+Artemis+OR+%22risk+radar%22%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Graphika | https://news.google.com/rss/search?q=Graphika+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | PeakMetrics | https://news.google.com/rss/search?q=PeakMetrics+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Dataminr | https://news.google.com/rss/search?q=Dataminr+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Brandwatch | https://news.google.com/rss/search?q=Brandwatch+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Meltwater | https://news.google.com/rss/search?q=Meltwater+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Talkwalker & Hootsuite | https://news.google.com/rss/search?q=Talkwalker+OR+Hootsuite+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Sprinklr | https://news.google.com/rss/search?q=Sprinklr+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Khoros | https://news.google.com/rss/search?q=Khoros+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Signal AI | https://news.google.com/rss/search?q=%22Signal+AI%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Zignal Labs | https://news.google.com/rss/search?q=%22Zignal+Labs%22+OR+Zignal+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Competitors | Flashpoint & Recorded Future | https://news.google.com/rss/search?q=%22Recorded+Future%22+OR+%28Flashpoint+%22threat+intelligence%22%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- Narrative Intelligence Industry ---
+Narrative Intelligence Industry | Narrative intelligence | https://news.google.com/rss/search?q=%22narrative+intelligence%22+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Narrative Intelligence Industry | Monitoring & listening deals | https://news.google.com/rss/search?q=%28%22social+listening%22+OR+%22media+monitoring%22+OR+%22media+intelligence%22%29+%28funding+OR+raises+OR+acquires+OR+acquisition+OR+launches%29+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- PR & Comms Trades ---
+PR & Comms Trades | PR Daily (Ragan) | https://www.prdaily.com/feed/
+PR & Comms Trades | PR News | https://www.prnewsonline.com/feed/
+PR & Comms Trades | Institute for Public Relations | https://instituteforpr.org/feed/
+PR & Comms Trades | Spin Sucks | https://spinsucks.com/feed/
+PR & Comms Trades | PRWeek | https://news.google.com/rss/search?q=site%3Aprweek.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+PR & Comms Trades | PRovoke Media | https://news.google.com/rss/search?q=site%3Aprovokemedia.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+PR & Comms Trades | O'Dwyer's | https://news.google.com/rss/search?q=site%3Aodwyerpr.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+
+# --- Marketing & Advertising Trades ---
+Marketing & Advertising Trades | Adweek | https://www.adweek.com/feed/
+Marketing & Advertising Trades | Digiday | https://digiday.com/feed/
+Marketing & Advertising Trades | Marketing Dive | https://www.marketingdive.com/feeds/news/
+Marketing & Advertising Trades | MarTech | https://martech.org/feed/
+Marketing & Advertising Trades | Social Media Today | https://www.socialmediatoday.com/feeds/news/
+Marketing & Advertising Trades | Ad Age | https://news.google.com/rss/search?q=site%3Aadage.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | The Drum | https://news.google.com/rss/search?q=site%3Athedrum.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | Campaign | https://news.google.com/rss/search?q=site%3Acampaignlive.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
+Marketing & Advertising Trades | Marketing Week | https://news.google.com/rss/search?q=site%3Amarketingweek.com+when%3A1d&hl=en-US&gl=US&ceid=US:en
