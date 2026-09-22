@@ -10,6 +10,10 @@ import re
 import html
 import socket
 import calendar
+import json
+import time
+import urllib.request
+import urllib.error
 import datetime as dt
 from email.utils import format_datetime
 from pathlib import Path
@@ -24,6 +28,27 @@ FEED_DESCRIPTION = "Crisis communications, reputation and marketing news from th
 HOURS_TO_KEEP = 36        # how far back articles are kept
 MAX_ITEMS = 900           # cap on articles in the combined feed
 PER_SOURCE_MAX = 30       # stops busy sources (e.g. Variety) crowding out the rest
+# ------------------------------------------------------------------------
+ 
+# ---- AI filter (GitHub Models, free with the workflow's built-in token) ----
+AI_MODEL = "openai/gpt-4o-mini"
+AI_ENDPOINT = "https://models.github.ai/inference/chat/completions"
+AI_CACHE = Path("ai_cache.json")   # remembers verdicts so each headline is only checked once
+AI_BATCH = 40
+AI_RULES = {
+    "Crisis Watch": """Keep a headline ONLY if it is about a specific company, brand, executive, or
+non-government institution (university, sports league or team, nonprofit, hospital system, media
+company) facing a reputation, trust or narrative problem: backlash, boycott, scandal, controversy,
+apology, executive ouster, data breach, product recall, lawsuit against the organization, viral
+criticism, or false claims spreading about it.
+DROP: politics and government (politicians, government agencies, elections, legislation, courts
+ruling on government policy, military, foreign affairs, protests about government), crime and local
+news not about an organization, sports results and trades, celebrity gossip with no organization
+involved, opinion pieces, listicles, explainers, how-to articles, and investing tips.""",
+    "Sales Signals": """Keep a headline ONLY if a company or non-government institution is appointing
+a communications, corporate affairs, or PR leader, or hiring a PR or crisis communications firm.
+DROP everything else, including government appointments.""",
+}
 # ------------------------------------------------------------------------
  
 SITE_URL = os.environ.get("SITE_URL", "").rstrip("/") + "/"
@@ -119,6 +144,92 @@ def top_stories(items, limit=8):
     return ranked[:limit]
  
  
+def ask_model(messages):
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        raise RuntimeError("no GITHUB_TOKEN available")
+    body = json.dumps({"model": AI_MODEL, "messages": messages, "temperature": 0}).encode()
+    req = urllib.request.Request(AI_ENDPOINT, data=body, method="POST", headers={
+        "Authorization": f"Bearer {token}", "Content-Type": "application/json",
+        "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=90) as r:
+        data = json.load(r)
+    return data["choices"][0]["message"]["content"]
+ 
+ 
+def classify(category, batch):
+    """batch: list of (id, title). Returns {id: {"keep": bool, "org": str, "type": str}}."""
+    listing = "\n".join(f"{i}: {t}" for i, t in batch)
+    messages = [
+        {"role": "system", "content":
+            "You screen news headlines for a narrative-intelligence company whose customers are "
+            "corporate communications, legal and security teams.\n\n" + AI_RULES[category] +
+            '\n\nReply with JSON only, no other text: {"results": [{"id": <number>, "keep": true or false, '
+            '"org": "<organization name, or empty>", "type": "<2-4 word crisis type, or empty>"}]} '
+            "with one entry for every headline."},
+        {"role": "user", "content": listing},
+    ]
+    text = ask_model(messages)
+    match = re.search(r"\{.*\}", text, re.S)
+    results = json.loads(match.group(0))["results"] if match else []
+    return {int(r["id"]): r for r in results if "id" in r}
+ 
+ 
+def ai_filter(items):
+    """Drop headlines the model says are off-topic. Anything unchecked is kept (safe fallback)."""
+    targets = [i for i in items if i["category"] in AI_RULES]
+    if not targets:
+        return items, ""
+    try:
+        cache = json.loads(AI_CACHE.read_text()) if AI_CACHE.exists() else {}
+    except Exception:
+        cache = {}
+    now = time.time()
+    cache = {k: v for k, v in cache.items() if now - v.get("t", 0) < 4 * 86400}
+ 
+    todo = [i for i in targets if f'{i["category"]}|{title_key(i["title"])}' not in cache]
+    checked, error = 0, ""
+    for category in AI_RULES:
+        group = [i for i in todo if i["category"] == category]
+        for start in range(0, len(group), AI_BATCH):
+            chunk = group[start:start + AI_BATCH]
+            try:
+                verdicts = classify(category, [(n, i["title"]) for n, i in enumerate(chunk)])
+            except Exception as ex:
+                error = str(ex)
+                print(f"  ! AI filter unavailable ({ex}); keeping unchecked headlines this run")
+                break
+            for n, i in enumerate(chunk):
+                v = verdicts.get(n)
+                if v is not None:
+                    cache[f'{category}|{title_key(i["title"])}'] = {
+                        "keep": bool(v.get("keep")), "org": str(v.get("org") or "")[:60],
+                        "type": str(v.get("type") or "")[:40], "t": now}
+                    checked += 1
+            time.sleep(4)   # stay well inside the free rate limit
+        if error:
+            break
+ 
+    AI_CACHE.write_text(json.dumps(cache))
+    kept, dropped = [], 0
+    for i in items:
+        v = cache.get(f'{i["category"]}|{title_key(i["title"])}') if i["category"] in AI_RULES else None
+        if v is None:
+            kept.append(i)
+            continue
+        if not v["keep"]:
+            dropped += 1
+            continue
+        if not i["summary"] and (v["org"] or v["type"]):
+            i["summary"] = ": ".join(x for x in (v["org"], v["type"].capitalize()) if x)
+        kept.append(i)
+    note = f"AI filter removed {dropped} off-topic headlines"
+    if error:
+        note += " (AI filter partly unavailable this hour; some headlines unchecked)"
+    print(f"  AI filter: {checked} newly checked, {dropped} removed")
+    return kept, note
+ 
+ 
 def main():
     feeds = load_feeds()
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=HOURS_TO_KEEP)
@@ -175,13 +286,14 @@ def main():
             added += 1
         print(f"  ✓ {name}: {added} new articles")
  
+    items, ai_note = ai_filter(items)
     items.sort(key=lambda i: i["date"], reverse=True)
     items = items[:MAX_ITEMS]
     now = dt.datetime.now(dt.timezone.utc)
     OUT.mkdir(exist_ok=True)
     write_rss(items, now)
     order = list(dict.fromkeys(c for c, _, _ in feeds))
-    write_html(items, now, ok, len(feeds), failed, order)
+    write_html(items, now, ok, len(feeds), failed, order, ai_note)
     print(f"\nDone: {len(items)} articles from {ok}/{len(feeds)} sources "
           f"({blocked} filtered out by exclude.txt).")
     if failed:
@@ -212,7 +324,7 @@ def write_rss(items, now):
     (OUT / "feed.xml").write_text("\n".join(out), encoding="utf-8")
  
  
-def write_html(items, now, ok, total, failed, order):
+def write_html(items, now, ok, total, failed, order, ai_note=""):
     present = {i["category"] for i in items}
     cats = [c for c in order if c in present]
     top = []
@@ -242,6 +354,8 @@ def write_html(items, now, ok, total, failed, order):
     status = f"{ok} of {total} sources updated"
     if failed:
         status += f"; not reachable this hour: {', '.join(failed)}"
+    if ai_note:
+        status += f". {ai_note}"
     page = TEMPLATE.format(title=html.escape(FEED_TITLE), feed=html.escape(SITE_URL + "feed.xml"),
                            updated=now.strftime("%-d %b %Y, %H:%M UTC"), count=len(items),
                            chips=chips, rows="\n".join(rows), status=html.escape(status), top=top_html)
