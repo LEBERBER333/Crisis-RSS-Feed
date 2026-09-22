@@ -11,6 +11,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  models: read              # lets the AI filter use GitHub Models for free
 
 concurrency:
   group: pages
@@ -28,10 +29,23 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install feedparser==6.0.11
+      - name: Restore AI filter memory
+        uses: actions/cache/restore@v4
+        with:
+          path: ai_cache.json
+          key: ai-cache-${{ github.run_id }}
+          restore-keys: ai-cache-
       - name: Merge feeds
         run: python build_feed.py
         env:
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Save AI filter memory
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ai_cache.json
+          key: ai-cache-${{ github.run_id }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
